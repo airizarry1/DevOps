@@ -1,0 +1,42 @@
+#Installing Active Directory User & Computers 
+Add-WindowsFeature Ad-Domain-Services
+
+#Adding AD Groups to Active Directory
+New-ADGroup -Name "Group Name" -SamAccountName SamName -GroupCategory Security -GroupScope Global -DisplayName "DisplayName"
+
+#Lookup AD Group Name
+Get-ADGroup -Identify groupname
+
+#Specifiy forest in AD
+Install-ADDSForest -DomainName tekperfect.corp -InstallDNS
+
+#Password stored here for users
+$Password = Read-Host -AsSecureString
+
+#Create new AD Group
+New-ADGroup -name "Finance"
+New-ADGroup -name "IT"
+New-ADGroup -name "DevOps"
+New-ADGroup -name "HR"
+New-ADGroup -name "SEC"
+New-ADGroup -name "Marketing"
+
+#Add new users to the Forest
+New-ADUser -Name "Philip Banks" -GivenName "Philip" -Surname "Banks" -SamAccountName pbanks -Title "VP of IT"
+New-ADUser -Name "Vivian Banks" -GivenName "Vivian" -Surname "Banks" -SamAccountName vbanks -Title "Director of Finance"
+New-ADUser -Name "Will Smith" -GivenName "Will" -Surname "Smith" -SamAccountName wsmith -Title "VP of Security"
+New-ADUser -Name "DJ Jazzy Jeff" -GivenName "DJ Jazzy" -Surname "Jeff" -SamAccountName djjeff -Title "Marketing Specialist"
+New-ADUser -Name "Hilary Banks" -GivenName "Hilary" -Surname "Banks" -SamAccountName hbanks -Title "Accounting Manager"
+New-ADUser -Name "Ashley Banks" -GivenName "Ashley" -Surname "Banks" -SamAccountName abanks -Title "HR Coordinator"
+
+#Add users to AD groups
+
+Add-AdGroupMember -Identify HR -Members abanks
+Add-AdGroupMember -Identify Finance -Members hbanks
+Add-AdGroupMember -Identify Marketing -Members djjeff
+Add-AdGroupMember -Identify SEC -Members wsmith
+Add-AdGroupMember -Identify Finance -Members vbanks
+Add-AdGroupMember -Identify IT -Members pbanks
+
+#List users in system 
+net user
